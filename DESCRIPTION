@@ -14,3 +14,5 @@ BugReports: https://github.com/SimonDedman/statscourse/issues
 Depends: 
     R (>= 3.5)
 LazyData: true
+Imports: 
+    rnaturalearth

@@ -144,7 +144,7 @@ plot_spatial_map <- function(df,
   )
 }
 
-
+usethis::use_package("rnaturalearth")
 
 
 # Shark data (sharkdata) ####
