@@ -299,3 +299,6 @@ plot_spatial_map(
   here::here("outputs", "01_explore-clean", "expvardy_spatial_distribution.png"),
   title = "Dynamic Explanatory Data Spatial Distribution"
 )
+
+# Save cleaned and joined data ####
+usethis::use_data(sharkdatajoined, overwrite = TRUE)
