@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of statscourse is to tech stats
+The goal of statscourse is to teach stats
 
 ## Installation
 
