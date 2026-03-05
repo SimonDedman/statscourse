@@ -1,0 +1,331 @@
+/* Simon Dedman Custom Theme - FIU Colors
+   Standalone theme (no metropolis dependency)
+
+   FIU Dark Blue: #081E3F
+   FIU Gold: #B6862C
+*/
+
+/* ============================================
+   FONTS
+   ============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;500;700&family=Fira+Mono&display=swap');
+
+body {
+  font-family: 'Fira Sans', sans-serif !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Fira Sans', sans-serif !important;
+  font-weight: 500 !important;
+}
+
+/* ============================================
+   GLOBAL - Override metropolis colors
+   ============================================ */
+
+/* Replace metropolis blue (#23373B) everywhere */
+.remark-slide-content,
+.remark-slide-content *,
+.title-slide,
+.title-slide *,
+.inverse,
+.inverse * {
+  --metropolis-blue: #081E3F;
+}
+
+/* ============================================
+   KILL ALL METROPOLIS PSEUDO-ELEMENTS
+   ============================================ */
+
+.remark-slide-content::before,
+.remark-slide-content::after,
+.title-slide::before,
+.title-slide::after,
+.remark-slide-content.title-slide::before,
+.remark-slide-content.title-slide::after,
+.remark-slide-content.inverse::before,
+.remark-slide-content.inverse::after {
+  display: none !important;
+  content: none !important;
+  height: 0 !important;
+  background: none !important;
+}
+
+/* ============================================
+   TITLE SLIDE
+   ============================================ */
+
+.title-slide,
+.remark-slide-content.title-slide {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  color: #081E3F !important;
+  padding-top: 120px !important;
+}
+
+/* Create blue header manually */
+.title-slide h1 {
+  background-color: #081E3F !important;
+  color: #B6862C !important;
+  margin: -120px -40px 30px -40px !important;
+  padding: 30px 40px 30px 40px !important;
+  font-size: 1.8em !important;
+}
+
+.title-slide h2 {
+  color: #081E3F !important;
+  font-size: 1.2em !important;
+  text-shadow: none !important;
+}
+
+/* Author and date in gold, no glow */
+.title-slide h3,
+.title-slide .remark-slide-content h3 {
+  color: #B6862C !important;
+  font-size: 1em !important;
+  text-shadow: none !important;
+}
+
+/* Author field from YAML - gold, no glow */
+.remark-slide-content.title-slide .author,
+.remark-slide-content.title-slide .date,
+.title-slide .author,
+.title-slide .date {
+  color: #B6862C !important;
+  text-shadow: none !important;
+}
+
+.title-slide .remark-slide-number {
+  display: none !important;
+}
+
+/* ============================================
+   INVERSE SLIDES (Section dividers)
+   ============================================ */
+
+.inverse,
+.remark-slide-content.inverse {
+  background-color: #081E3F !important;
+  background-image: none !important;
+  color: #ffffff !important;
+  padding-top: 30px !important;
+}
+
+/* Section card titles - larger and gold, no glow */
+.inverse h1,
+.remark-slide-content.inverse h1 {
+  color: #B6862C !important;
+  background: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 2.2em !important;
+  text-shadow: none !important;
+}
+
+.inverse h2,
+.remark-slide-content.inverse h2 {
+  color: #B6862C !important;
+  font-size: 1.6em !important;
+  text-shadow: none !important;
+}
+
+/* All text in inverse slides - gold, no glow */
+.inverse h3,
+.remark-slide-content.inverse h3,
+.inverse p,
+.remark-slide-content.inverse p {
+  color: #B6862C !important;
+  text-shadow: none !important;
+  font-size: 1.2em !important;
+}
+
+/* ============================================
+   REGULAR SLIDES
+   ============================================ */
+
+.remark-slide-content {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  padding-top: 10px !important;
+  padding-left: 40px !important;
+  padding-right: 40px !important;
+  padding-bottom: 15px !important;
+}
+
+/* Title as blue header bar - larger than body headings */
+.remark-slide-content > h1:first-of-type {
+  background-color: #081E3F !important;
+  color: #B6862C !important;
+  margin: -10px -40px 15px -40px !important;
+  padding: 12px 40px !important;
+  font-size: 1.6em !important;
+}
+
+/* Don't apply header style to inverse slides */
+.remark-slide-content.inverse > h1:first-of-type {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Body headings - smaller than title bar */
+.remark-slide-content h2 {
+  color: #081E3F !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+  font-size: 1.3em !important;
+}
+
+.remark-slide-content h3 {
+  color: #081E3F !important;
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+  font-size: 1.1em !important;
+}
+
+/* ============================================
+   TWO-COLUMN LAYOUTS - Align tops
+   ============================================ */
+
+.pull-left,
+.pull-right {
+  vertical-align: top !important;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+.pull-left {
+  float: left !important;
+  width: 49% !important;
+}
+
+.pull-right {
+  float: right !important;
+  width: 49% !important;
+}
+
+/* ============================================
+   TABLES - Reduce spacing
+   ============================================ */
+
+table {
+  margin-top: 8px !important;
+  margin-bottom: 8px !important;
+}
+
+thead th {
+  background-color: #081E3F !important;
+  color: white !important;
+}
+
+/* ============================================
+   CODE BLOCKS - Reduce spacing
+   ============================================ */
+
+pre {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+  padding: 8px !important;
+}
+
+.remark-code, .remark-inline-code, pre, code {
+  font-family: 'Fira Mono', 'DejaVu Sans Mono', 'Consolas', monospace !important;
+}
+
+/* ============================================
+   LISTS - Tighter spacing
+   ============================================ */
+
+ul, ol {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+
+li {
+  margin-bottom: 3px !important;
+}
+
+/* ============================================
+   PARAGRAPHS
+   ============================================ */
+
+p {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+
+/* ============================================
+   LINKS
+   ============================================ */
+
+a, a:visited {
+  color: #081E3F !important;
+}
+
+a:hover {
+  color: #B6862C !important;
+}
+
+/* ============================================
+   BLOCKQUOTES
+   ============================================ */
+
+/* Blockquotes - gold bar, BLACK text */
+blockquote {
+  border-left: 4px solid #B6862C !important;
+  padding-left: 1em !important;
+  margin: 5px 0 !important;
+  color: #000000 !important;
+  font-style: normal !important;
+}
+
+blockquote p {
+  color: #000000 !important;
+}
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+
+.small-text {
+  font-size: 0.85em;
+}
+
+.smaller-text {
+  font-size: 0.75em;
+}
+
+.gold, .gold * {
+  color: #B6862C !important;
+  text-shadow: none !important;
+}
+
+/* ============================================
+   SLIDE CONTAINER
+   ============================================ */
+
+.remark-slide-scaler {
+  box-shadow: none !important;
+}
+
+/* ============================================
+   CENTER CLASS
+   ============================================ */
+
+.center {
+  text-align: center !important;
+}
+
+.middle {
+  vertical-align: middle !important;
+}
+
+/* Center images in inverse slides */
+.inverse img,
+.remark-slide-content.inverse img {
+  display: block !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}

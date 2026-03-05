@@ -1,0 +1,11 @@
+.remark-code .hljs-comment {
+  font-style: normal !important;
+}
+
+/* Package logos in title bar - vertically centred */
+.remark-slide-content > h1:first-of-type img {
+  float: right;
+  height: 52px;
+  margin-top: -12px;
+  margin-bottom: -12px;
+}
