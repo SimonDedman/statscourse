@@ -127,19 +127,23 @@ split <- rsample::initial_split(samples, prop = 0.8, strata = presence)
 train_data <- rsample::training(split)
 test_data <- rsample::testing(split)
 
-# Check response variable class count and prevalence — metric choice depends on both
+# Auto-select evaluation metric based on class count and prevalence
 n_classes <- nlevels(train_data$presence)
 if (n_classes > 2) {
-  message(sprintf("Multiclass classification detected (%d classes)", n_classes))
-  message("MCC (Gorodkin multiclass generalisation) used for model selection")
-  message("Note: SEDI is not available for multiclass problems")
+  class_prevs <- table(train_data$presence) / nrow(train_data)
+  min_prev <- min(class_prevs)
+  message(sprintf("Multiclass classification (%d classes); min prevalence: %.1f%%",
+                  n_classes, min_prev * 100))
 } else {
-  prevalence <- mean(train_data$presence == "present")
-  message(sprintf("Prevalence: %.1f%%", prevalence * 100))
-  if (prevalence < 0.025) {
-    message("Prevalence < 2.5%: MCC/TSS unreliable at this level.")
-    message("Use select_best(metric = 'sedi') instead (Wunderlich et al. 2019)")
-  }
+  min_prev <- mean(train_data$presence == "present")
+  message(sprintf("Binary classification; prevalence: %.1f%%", min_prev * 100))
+}
+if (min_prev < 0.025) {
+  selection_metric <- "sedi"
+  message("Prevalence < 2.5%: using SEDI for model selection (Wunderlich et al. 2019)")
+} else {
+  selection_metric <- "mcc"
+  message("Using MCC for model selection (Chicco & Jurman 2020)")
 }
 
 # 10-fold cross-validation
@@ -308,7 +312,7 @@ sdm_metrics <- yardstick::metric_set(
 
 # Select best parameters
 best_params <- tune::select_best(tune_results,
-                                 metric = "mcc")  # Matthews correlation coefficient
+                                 metric = selection_metric)
 
 # Finalize workflow
 final_workflow <- tune::finalize_workflow(brt_wf, best_params)
@@ -587,19 +591,23 @@ data_split <- rsample::initial_split(samples, prop = 0.8, strata = presence)
 train_data <- rsample::training(data_split)
 test_data <- rsample::testing(data_split)
 
-# Check response variable class count and prevalence — metric choice depends on both
+# Auto-select evaluation metric based on class count and prevalence
 n_classes <- nlevels(train_data$presence)
 if (n_classes > 2) {
-  message(sprintf("Multiclass classification detected (%d classes)", n_classes))
-  message("MCC (Gorodkin multiclass generalisation) used for model selection")
-  message("Note: SEDI is not available for multiclass problems")
+  class_prevs <- table(train_data$presence) / nrow(train_data)
+  min_prev <- min(class_prevs)
+  message(sprintf("Multiclass classification (%d classes); min prevalence: %.1f%%",
+                  n_classes, min_prev * 100))
 } else {
-  prevalence <- mean(train_data$presence == "present")
-  message(sprintf("Prevalence: %.1f%%", prevalence * 100))
-  if (prevalence < 0.025) {
-    message("Prevalence < 2.5%: MCC/TSS unreliable at this level.")
-    message("Use select_best(metric = 'sedi') instead (Wunderlich et al. 2019)")
-  }
+  min_prev <- mean(train_data$presence == "present")
+  message(sprintf("Binary classification; prevalence: %.1f%%", min_prev * 100))
+}
+if (min_prev < 0.025) {
+  selection_metric <- "sedi"
+  message("Prevalence < 2.5%: using SEDI for model selection (Wunderlich et al. 2019)")
+} else {
+  selection_metric <- "mcc"
+  message("Using MCC for model selection (Chicco & Jurman 2020)")
 }
 
 ## 3. Spatial CV folds ####
@@ -688,7 +696,7 @@ tune_results <- tune::tune_grid(
 
 ## 9. Select best and finalize ####
 best_params <- tune::select_best(tune_results,
-                                 metric = "mcc")  # Matthews correlation coefficient
+                                 metric = selection_metric)
 final_workflow <- tune::finalize_workflow(brt_workflow, best_params)
 
 ## 10. Final fit and evaluation ####

@@ -609,7 +609,7 @@ sdm_metrics <- metric_set(
 # Select best parameters
 best_params <- select_best(
   tune_results,
-  metric = "mcc"  # Matthews correlation coefficient
+  metric = selection_metric  # set by prevalence check
 )
 
 # Finalize workflow
@@ -1184,9 +1184,9 @@ TSS supersedes Kappa but typically both TSS and AUC are reported (Allouche et al
 
 `yardstick::j_index` is TSS: sensitivity + specificity - 1
 
-Select best on **MCC** (Chicco & Jurman 2020); if prevalence < 2.5%, use **SEDI** instead (custom metric defined in script; PR [#630](https://github.com/tidymodels/yardstick/pull/630))
+`selection_metric` auto-set: **MCC** if prevalence >= 2.5%, **SEDI** if < 2.5% (Chicco & Jurman 2020; Wunderlich et al. 2019; PR [#630](https://github.com/tidymodels/yardstick/pull/630))
 
-**Multiclass** (3+ classes, e.g. habitat type): MCC generalises automatically (Gorodkin 2004); SEDI is binary-only
+**Multiclass** (3+ classes, e.g. habitat type): both MCC and SEDI generalise — checked on min per-class prevalence
 ]
 
 .pull-right[
@@ -1288,7 +1288,7 @@ tune_results <- tune_grid(brt_workflow, resamples = spatial_folds,
                           grid = brt_grid, metrics = sdm_metrics)
 
 # 🏆 9. Select best and finalize
-best_params <- select_best(tune_results, metric = "mcc")
+best_params <- select_best(tune_results, metric = selection_metric)
 final_workflow <- finalize_workflow(brt_workflow, best_params)
 
 # 📈 10. Final fit and evaluation
