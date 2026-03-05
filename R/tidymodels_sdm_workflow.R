@@ -127,12 +127,19 @@ split <- rsample::initial_split(samples, prop = 0.8, strata = presence)
 train_data <- rsample::training(split)
 test_data <- rsample::testing(split)
 
-# Check prevalence — metric choice depends on class balance
-prevalence <- mean(train_data$presence == "present")
-message(sprintf("Prevalence: %.1f%%", prevalence * 100))
-if (prevalence < 0.025) {
-  message("Prevalence < 2.5%: MCC/TSS unreliable at this level.")
-  message("Use select_best(metric = 'sedi') instead (Wunderlich et al. 2019)")
+# Check response variable class count and prevalence — metric choice depends on both
+n_classes <- nlevels(train_data$presence)
+if (n_classes > 2) {
+  message(sprintf("Multiclass classification detected (%d classes)", n_classes))
+  message("MCC (Gorodkin multiclass generalisation) used for model selection")
+  message("Note: SEDI is not available for multiclass problems")
+} else {
+  prevalence <- mean(train_data$presence == "present")
+  message(sprintf("Prevalence: %.1f%%", prevalence * 100))
+  if (prevalence < 0.025) {
+    message("Prevalence < 2.5%: MCC/TSS unreliable at this level.")
+    message("Use select_best(metric = 'sedi') instead (Wunderlich et al. 2019)")
+  }
 }
 
 # 10-fold cross-validation
@@ -580,12 +587,19 @@ data_split <- rsample::initial_split(samples, prop = 0.8, strata = presence)
 train_data <- rsample::training(data_split)
 test_data <- rsample::testing(data_split)
 
-# Check prevalence — metric choice depends on class balance
-prevalence <- mean(train_data$presence == "present")
-message(sprintf("Prevalence: %.1f%%", prevalence * 100))
-if (prevalence < 0.025) {
-  message("Prevalence < 2.5%: MCC/TSS unreliable at this level.")
-  message("Use select_best(metric = 'sedi') instead (Wunderlich et al. 2019)")
+# Check response variable class count and prevalence — metric choice depends on both
+n_classes <- nlevels(train_data$presence)
+if (n_classes > 2) {
+  message(sprintf("Multiclass classification detected (%d classes)", n_classes))
+  message("MCC (Gorodkin multiclass generalisation) used for model selection")
+  message("Note: SEDI is not available for multiclass problems")
+} else {
+  prevalence <- mean(train_data$presence == "present")
+  message(sprintf("Prevalence: %.1f%%", prevalence * 100))
+  if (prevalence < 0.025) {
+    message("Prevalence < 2.5%: MCC/TSS unreliable at this level.")
+    message("Use select_best(metric = 'sedi') instead (Wunderlich et al. 2019)")
+  }
 }
 
 ## 3. Spatial CV folds ####

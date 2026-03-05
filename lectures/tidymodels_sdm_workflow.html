@@ -1113,6 +1113,8 @@ TSS supersedes Kappa but typically both TSS and AUC are reported (Allouche et al
 `yardstick::j_index` is TSS: sensitivity + specificity - 1
 
 Select best on **MCC** (Chicco &amp; Jurman 2020); if prevalence &lt; 2.5%, use **SEDI** instead (custom metric defined in script; PR [#630](https://github.com/tidymodels/yardstick/pull/630))
+
+**Multiclass** (3+ classes, e.g. habitat type): MCC generalises automatically (Gorodkin 2004); SEDI is binary-only
 ]
 
 .pull-right[
